@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="bn" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TARIN • Motion Spectrums</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=Hind+Siliguri:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+  <!-- Background Particle & Glow Effects -->
+  <canvas id="particleCanvas"></canvas>
+  <div id="heartContainer"></div>
+  <div class="ambient-glow glow-top"></div>
+  <div class="ambient-glow glow-bottom"></div>
+
+  <!-- Sleek Navigation Header -->
+  <header class="glass-header">
+    <div class="header-inner">
+      <!-- Mode Switchers (Defaulting to Motion Ribbon 'marquee') -->
+      <nav class="mode-nav">
+        <button class="mode-btn active" data-mode="marquee" title="মোশন রিবন">
+          <i class="fa-solid fa-film"></i>
+          <span>মোশন রিবন</span>
+        </button>
+        <button class="mode-btn" data-mode="orbit" title="3D অরবিট স্টেজ">
+          <i class="fa-solid fa-circle-nodes"></i>
+          <span>3D অরবিট</span>
+        </button>
+        <button class="mode-btn" data-mode="grid" title="3D গ্রিড গ্যালারি">
+          <i class="fa-solid fa-border-all"></i>
+          <span>3D গ্রিড</span>
+        </button>
+        <button class="mode-btn" data-mode="stack" title="পোলারয়েড স্ট্যাক">
+          <i class="fa-solid fa-layer-group"></i>
+          <span>পোলারয়েড</span>
+        </button>
+        <button class="mode-btn" data-mode="organic" title="লিকুইড শেপস">
+          <i class="fa-solid fa-shapes"></i>
+          <span>লিকুইড ব্লাব</span>
+        </button>
+      </nav>
+
+      <div class="header-right">
+        <!-- Audio Synth Toggle -->
+        <button id="audioToggle" class="icon-glow-btn" title="অ্যাম্বিয়েন্ট সাউন্ড অন/অফ">
+          <i class="fa-solid fa-compact-disc"></i>
+        </button>
+        
+        <!-- Cinema Mode Button -->
+        <button id="cinemaModeBtn" class="btn-primary-neon" title="কাব্যিক সিনেমাটিক মোড">
+          <i class="fa-solid fa-play"></i> সিনেমা মোড
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Pure Showcase Container -->
+  <main class="main-container">
+
+    <!-- STAGE 1: DEFAULT ACTIVE - INFINITE MOTION MARQUEE RIBBON -->
+    <section id="marqueeStage" class="stage-section active">
+      <div class="marquee-wrapper">
+        <div id="marqueeTrack1" class="marquee-track track-left"></div>
+        <div id="marqueeTrack2" class="marquee-track track-right"></div>
+      </div>
+    </section>
+
+    <!-- STAGE 2: ULTRA-PREMIUM MODERN 3D ORBIT STAGE -->
+    <section id="orbitStage" class="stage-section hidden">
+      <div class="orbit-3d-wrapper" id="orbit3dWrapper">
+        <!-- Glowing 3D Orbital Rings & Atmospheric Particle Background -->
+        <div class="orbit-ring ring-1"></div>
+        <div class="orbit-ring ring-2"></div>
+        <div class="orbit-floor-glow"></div>
+
+        <!-- 3D Revolving Container -->
+        <div id="orbitCarousel" class="orbit-carousel"></div>
+      </div>
+    </section>
+
+    <!-- STAGE 3: Scattered Polaroid Fan Stack -->
+    <section id="stackStage" class="stage-section hidden">
+      <div class="stack-controls">
+        <button id="shuffleStackBtn" class="btn-primary-neon"><i class="fa-solid fa-shuffle"></i> এলোমেলো (Shuffle)</button>
+        <button id="fanStackBtn" class="btn-glass"><i class="fa-solid fa-arrows-left-right"></i> ফ্যান আউট (Fan Out)</button>
+      </div>
+      <div id="stackContainer" class="stack-container"></div>
+    </section>
+
+    <!-- STAGE 4: MAIN 3D & Organic Grid Gallery -->
+    <section id="gridStage" class="stage-section hidden">
+      <div id="mainPhotoGrid" class="main-photo-grid"></div>
+    </section>
+
+  </main>
+
+  <!-- Fullscreen Cinema Showcase Modal -->
+  <div id="cinemaModal" class="cinema-modal hidden">
+    <div class="cinema-backdrop" id="cinemaBackdrop"></div>
+    <div class="cinema-content">
+      <button id="closeCinema" class="cinema-close-btn"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div class="cinema-slide">
+        <div class="cinema-img-wrap">
+          <img id="cinemaImg" src="" alt="Cinema slide" />
+          <div class="cinema-badge" id="cinemaBadge">আনন্দ</div>
+        </div>
+        <div class="cinema-caption-box">
+          <h2 id="cinemaTitle">উচ্ছ্বল হাসির স্পন্দন</h2>
+          <p id="cinemaQuote" class="poetic-quote">"হাসির মাঝে লুকিয়ে থাকে এক হাজার শুভ্র বসন্তের উজ্জ্বল আলো।"</p>
+        </div>
+      </div>
+
+      <button id="cinemaPrev" class="cinema-nav left"><i class="fa-solid fa-chevron-left"></i></button>
+      <button id="cinemaNext" class="cinema-nav right"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="lightbox-modal hidden">
+    <div class="lightbox-overlay"></div>
+    <div class="lightbox-dialog glass-card">
+      <button id="closeLightbox" class="lb-close"><i class="fa-solid fa-xmark"></i></button>
+      <button id="lbPrev" class="lb-nav left"><i class="fa-solid fa-chevron-left"></i></button>
+      <button id="lbNext" class="lb-nav right"><i class="fa-solid fa-chevron-right"></i></button>
+
+      <div class="lb-body">
+        <div class="lb-img-container">
+          <img id="lbImg" src="" alt="Full view" />
+        </div>
+        <div class="lb-info-panel">
+          <span class="lb-badge" id="lbBadge">অভিজাত্য</span>
+          <h2 id="lbTitle">কাব্যিক চাহনি</h2>
+          <div class="lb-quote-wrap">
+            <i class="fa-solid fa-quote-left quote-icon"></i>
+            <p id="lbQuote">"চোখের পলকে লেখা হয় না বলা হাজারও কাব্যের পংক্তিমালা।"</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./script.js"></script>
+</body>
+</html>
