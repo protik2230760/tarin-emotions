@@ -277,8 +277,9 @@ function renderOrbitCarousel() {
   
   const currentSetPhotos = getOrbitSetPhotos();
   const total = currentSetPhotos.length;
-  const radiusX = Math.min(window.innerWidth * 0.36, 440);
-  const radiusZ = Math.min(window.innerWidth * 0.28, 320);
+  const isMobile = window.innerWidth < 600;
+  const radiusX = isMobile ? Math.min(window.innerWidth * 0.34, 140) : Math.min(window.innerWidth * 0.36, 440);
+  const radiusZ = isMobile ? Math.min(window.innerWidth * 0.24, 90) : Math.min(window.innerWidth * 0.28, 320);
 
   currentSetPhotos.forEach((photo, i) => {
     const origIndex = tarinPhotos.findIndex(p => p.id === photo.id);
